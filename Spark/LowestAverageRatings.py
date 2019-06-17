@@ -38,6 +38,9 @@ if __name__ == "__main__":
     # For a unique movie ID, take 2 tuples mov1 and mov2 and sum the ratings and rating counts
     ratingTotalsAndCount = movieRatings.reduceByKey(lambda mov1, mov2: (mov1[0] + mov2[0], mov1[1] + mov2[1]))
 
+    # only choosing those ratings that are being rated by more than 10 people
+    ratingTotalsAndCount = ratingTotalsAndCount.filter(lambda mov : mov[1][1] > 10)
+
     # Mapping to (movieID, averageRatings)
     # for each movieID, divide the vale 1 by value 2
     averageRatings = ratingTotalsAndCount.mapValues(lambda movieavgrating : movieavgrating[0] / movieavgrating[1])
