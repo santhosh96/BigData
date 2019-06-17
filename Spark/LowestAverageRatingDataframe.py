@@ -37,6 +37,9 @@ if __name__ == "__main__":
     # computing the counts of ratings for each movie ID
     counts = movieDataset.groupBy("movieID").count()
 
+    # only choosing those ratings that are being rated by more than 10 people
+    counts = counts.filter("count > 10")
+
     # joining both the averageRatings and counts dataset over movieID
     averageAndCounts = counts.join(averageRatings, "movieID")
 
